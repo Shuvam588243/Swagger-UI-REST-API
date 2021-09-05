@@ -1,0 +1,205 @@
+---
+swagger: "2.0"
+info:
+  title: Article Management REST API
+  description : A Simple Article Management CRUD API
+  version : 1.0
+  contact: 
+    email: shuvamsengupta58824@gmail.com
+  license:
+    name: Apache 2.0
+    url: "https://apache.org/"
+  servers:
+    -url: "https://localhost:4000/"
+    description: This is my Local Server
+    -url: "https://company.com"
+    description: This is my Company Server
+
+schemes: [http, https]
+
+paths:
+  #Returns all the users
+  /article/:
+    get:
+      summary: Returns list of all the Aricles
+      description: Returns Articles
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              length: 
+                type: integer
+              books:
+                type: object
+                properties:
+                  title:
+                    type: string
+                  content:
+                    type: string
+        400:
+          description: User Error
+        500:
+          description: Internal Server Error
+
+    post:
+      summary: Adding New Aricles
+      description: Add Articles
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: user
+          schema:
+            type: object
+            properties:
+              newArticle: 
+                type: object
+                properties:
+                  title:
+                    type: string
+                  content:
+                    type: string
+              
+      responses:
+        200:
+          description: OK
+    delete:
+      summary: Delete all Article
+      description: Delete all Article
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              msg: 
+                type: string
+        400:
+          description: Error
+          schema:
+            type: object
+            properties:
+              err: 
+                type: string
+        500:
+          description: Internal Server Error
+
+
+  #Get Specific Article
+  /article/{title}:
+    get:
+      summary: Get Specific Article with Title
+      description: Get Specific Article
+      parameters:
+        - name: title
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          summary: OK
+          schema:
+            type: object
+            properties:
+              article:
+                type: object
+                properties:
+                  title:
+                    type: string
+                  content:
+                    type: string
+        400:
+          summary: Error
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+        500:
+          summary: Internal Server Error
+    
+    #Update Specific Article
+    put:
+      summary: Update Specific Article
+      description : Update Article
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - in: path
+          name: title
+          required: true
+          schema:
+            type: string
+        - in: body
+          name: article data
+          required: true
+          schema:
+            type: object
+            properties:
+              articleTitle:
+                type: string
+              articleContent:
+                type: string
+
+                
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              msg: 
+                type: string
+              updated_data:
+                type: object
+                properties:
+                  id: 
+                    type: integer
+                  title: 
+                    type: string
+                  content:
+                    type: string
+        400:
+          description: User Error
+          schema:
+            type: object
+            properties:
+              msg: 
+                type: string
+        500:
+          description: Internal Server Error
+    
+    #Delete Specif Article
+    delete:
+      summary: Delete a Specific Article
+      description: Delete a Article by Title
+      parameters:
+        - in: path
+          name: title
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              msg: 
+                type: string
+        400:
+          description: Error
+          schema:
+            type: object
+            properties:
+              err: 
+                type: string
+        500:
+          description: Internal Server Error
